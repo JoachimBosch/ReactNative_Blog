@@ -13,11 +13,10 @@ import { Feather } from "@expo/vector-icons";
 const IndexScreen = ({ navigation }) => {
     // default props contains a lot, of which navigation is one
 
-    const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+    const { state, deleteBlogPost } = useContext(Context);
 
     return (
         <View>
-            <Button title="Add Post" onPress={addBlogPost}></Button>
             <FlatList
                 data={state}
                 keyExtractor={(blogPost) => blogPost.title}
@@ -46,6 +45,16 @@ const IndexScreen = ({ navigation }) => {
     );
 };
 
+IndexScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+                <Feather name="plus" size={30} style={styles.headerIcon} />
+            </TouchableOpacity>
+        ),
+    };
+};
+
 const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
@@ -53,13 +62,16 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         borderColor: "grey",
         paddingHorizontal: 10,
-        borderBottomWidth: 1,
+        borderTopWidth: 1,
     },
     title: {
         fontSize: 18,
     },
     icon: {
         fontSize: 24,
+    },
+    headerIcon: {
+        marginRight: 10,
     },
 });
 
