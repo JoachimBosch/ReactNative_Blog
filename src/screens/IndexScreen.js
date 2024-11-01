@@ -17,8 +17,16 @@ const IndexScreen = ({ navigation }) => {
 
     useEffect(() => {
         getBlogPosts();
+
+        const listener = navigation.addListener("didFocus", () => {
+            getBlogPosts();
+        });
+
+        return () => {
+            listener.remove();
+        };
     }, []);
-    
+
     return (
         <View>
             <FlatList
